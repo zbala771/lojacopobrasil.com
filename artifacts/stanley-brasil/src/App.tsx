@@ -4,6 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
+import Success from "@/pages/Success";
+import Cancel from "@/pages/Cancel";
 import { useEffect } from "react";
 
 const queryClient = new QueryClient();
@@ -12,6 +14,8 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/success" component={Success} />
+      <Route path="/cancel" component={Cancel} />
       <Route component={NotFound} />
     </Switch>
   );

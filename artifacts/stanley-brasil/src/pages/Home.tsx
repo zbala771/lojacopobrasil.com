@@ -142,17 +142,55 @@ function FAQAccordion({ question, answer }: { question: string; answer: string }
   );
 }
 
-const CTA_BUTTON_TEXT = "QUERO O MEU AGORA ➜";
-
 function CtaButton({ className = "" }: { className?: string }) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleCheckout = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json() as { url?: string; error?: string };
+      if (!response.ok || !data.url) {
+        throw new Error(data.error ?? "Erro ao iniciar checkout");
+      }
+      window.location.href = data.url;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erro inesperado");
+      setLoading(false);
+    }
+  };
+
   return (
-    <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className={`w-full bg-primary hover:bg-yellow-400 text-black font-bold text-lg py-4 px-8 rounded-full shadow-lg glow-gold animate-pulse-gold transition-all flex items-center justify-center gap-2 ${className}`}
-    >
-      {CTA_BUTTON_TEXT}
-    </motion.button>
+    <div className={`flex flex-col items-center gap-2 ${className}`}>
+      <motion.button
+        whileHover={{ scale: loading ? 1 : 1.02 }}
+        whileTap={{ scale: loading ? 1 : 0.98 }}
+        onClick={handleCheckout}
+        disabled={loading}
+        data-testid="button-cta-checkout"
+        className="w-full bg-primary hover:bg-yellow-400 text-black font-bold text-lg py-4 px-8 rounded-full shadow-lg glow-gold animate-pulse-gold transition-all flex items-center justify-center gap-2 disabled:opacity-80 disabled:cursor-not-allowed"
+      >
+        {loading ? (
+          <>
+            <svg className="animate-spin h-5 w-5 mr-2 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+            Redirecionando...
+          </>
+        ) : (
+          "QUERO O MEU AGORA ➜"
+        )}
+      </motion.button>
+      {error && (
+        <p className="text-red-400 text-sm text-center">{error}</p>
+      )}
+    </div>
   );
 }
 
