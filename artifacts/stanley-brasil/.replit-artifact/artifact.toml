@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Stanley Brasil - Copo Personalizado"
+version = "1.0.0"
+id = "artifacts/stanley-brasil"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24103
+
+[services.development]
+run = "pnpm --filter @workspace/stanley-brasil run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/stanley-brasil", "run", "build" ]
+publicDir = "artifacts/stanley-brasil/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24103"
+BASE_PATH = "/"

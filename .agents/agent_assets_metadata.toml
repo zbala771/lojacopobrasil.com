@@ -1,0 +1,26 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "vCtE-l4Hsdk_zXTXtJ0k_"
+uri = "file://artifacts/stanley-brasil/public/cup-1.png"
+type = "image"
+title = "Premium black stanley cup front"
+
+[[generated]]
+id = "P36KqbB05zYBsej1FknVL"
+uri = "file://artifacts/stanley-brasil/public/cup-2.png"
+type = "image"
+title = "Premium black stanley cup side"
+
+[[generated]]
+id = "3ub2jBmltnig0PbGYc6BH"
+uri = "file://artifacts/stanley-brasil/public/cup-3.png"
+type = "image"
+title = "Premium black stanley cup detail"
+
+[[generated]]
+id = "3XVuKXGkgVwQVaoL4Dkft"
+uri = "file://artifacts/stanley-brasil/public/hero-bg.png"
+type = "image"
+title = "Cup hero background"
